@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flecha izquierda + Imagen superior rectangular</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* Eliminamos fondo de color sólido para que se vea la imagen */
+            background-color: transparent;
+            min-height: 100vh;
+        }
+
+        /* Contenedor de la imagen en la parte superior, forma rectangular */
+        .imagen-superior {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto;        /* altura automática según la imagen */
+            max-height: 40vh;    /* opcional: limitar a 40% del alto de la ventana */
+            background-color: #000; /* fondo por si falla la imagen */
+            z-index: 1;
+            overflow: hidden;
+            /* Aseguramos forma rectangular */
+            border-bottom: 2px solid rgba(255,255,255,0.2); /* sutil separación (opcional) */
+        }
+
+        .imagen-superior img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;   /* cubre el ancho, recorta si es necesario manteniendo rectangular */
+            object-position: center top; /* foco en parte superior de la imagen */
+        }
+
+        /* Flecha izquierda - encima de la imagen (z-index mayor) */
+        .arrow-left-top {
+            position: fixed;
+            top: 24px;
+            left: 24px;
+            z-index: 9999;       /* siempre por delante de la imagen */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .left-arrow-svg {
+            display: block;
+            width: 56px;
+            height: 56px;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3)); /* sombra para destacar sobre la imagen */
+            transition: none;
+            cursor: default;
+        }
+
+        /* Ajuste para móviles */
+        @media (max-width: 640px) {
+            .left-arrow-svg {
+                width: 44px;
+                height: 44px;
+            }
+            .arrow-left-top {
+                top: 16px;
+                left: 16px;
+            }
+            .imagen-superior {
+                max-height: 30vh;
+            }
+        }
+
+        /* Para que el resto de la página (si la hubiera) no tenga scroll innecesario,
+           pero como solo hay imagen arriba y flecha, el body ocupará el alto total */
+        body {
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- IMAGEN RECTANGULAR EN LA PARTE SUPERIOR -->
+    <div class="imagen-superior">
+        <img src="https://wallpapers.com/images/hd/cool-4k-ultra-hd-nao22k6od4a4djyl.jpg" 
+             alt="Imagen rectangular superior"
+             onerror="this.onerror=null; this.src='https://via.placeholder.com/1200x400?text=Imagen+no+disponible';">
+    </div>
+
+    <!-- FLECHA IZQUIERDA (EXACTAMENTE IGUAL QUE EN TU CÓDIGO ORIGINAL) -->
+    <div class="arrow-left-top" aria-label="Flecha apuntando hacia la izquierda" role="img">
+        <svg class="left-arrow-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 12H6M6 12L11 7M6 12L11 17" 
+                  stroke="#ffffff"      /* Cambiado a blanco para que contraste mejor sobre la imagen */
+                  stroke-width="2.2" 
+                  stroke-linecap="round" 
+                  stroke-linejoin="round"/>
+        </svg>
+    </div>
+
+</body>
+</html>
